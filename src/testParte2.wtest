@@ -1,0 +1,50 @@
+import personaje.*
+import spells.*
+import efectosGlobales.*
+import artefactos.*
+
+describe "Lucha reformulada"{
+	const espadaDelDestino = new Arma(10,new Date(28,10,2018))
+	const mascaraOscura = new MascaraOscura(1,10,new Date(28,10,2018))
+	const collarDivino = new CollarDivino(5,10,new Date(28,10,2018))
+	const rolando = new Personaje(#{espadaDelDestino,collarDivino,mascaraOscura}, #{},"",1000)
+test "Eliminar todos los artefactos y conocer el nivel de lucha de rolando" {
+	rolando.artefactos([])
+	assert.equals(1,rolando.habilidadLucha())
+}
+
+test "Conocer la hablidad para la lucha de Rolando con todos los artefactos"{
+	assert.equals(13,rolando.habilidadLucha())
+}
+
+test "Cambiar la cantidad de perlas a 3 y conocer la habilidad para la lucha de rolando"{
+	collarDivino.perlas(3)
+ 	assert.equals(11,rolando.habilidadLucha())
+}
+
+test "Cambiar el valor base para la lucha de rolando a 8 y conocer la habilidad para la lucha de rolando"{
+	rolando.valorBaseLucha(8)
+	assert.equals(20,rolando.habilidadLucha())
+}
+
+test "Hacer que ocurra un eclipse y preguntar por el valor de lucha de la máscara oscura" {
+	fuerzaOscura.eclipse()
+	assert.equals(5,mascaraOscura.unidadesDeLucha(rolando))
+}
+
+test "Eliminar la mascara oscura de los objetos de Rolando y conocer la habilidad para la lucha de Rolando"{
+	rolando.removerArtefacto(mascaraOscura)
+	assert.equals(9,rolando.habilidadLucha())
+}
+test "Tener una mascara(para nada) oscura con indice de oscuridad =0. Preguntar por el valor de lucha de la mascara oscura de rolando"{
+	const mascaraOscura2 = new MascaraOscura(0,10,new Date(28,10,2018))
+	assert.equals(4,mascaraOscura2.unidadesDeLucha(rolando))
+}
+
+test "Tener una mascara(para nada) oscura con indice de oscuridad =0 y valor minimo en 2. Preguntar por el valor de lucha de la mascara oscura de rolando"{
+	const mascaraOscura3 = new MascaraOscura(0,10,new Date(28,10,2018))
+	mascaraOscura3.valorMinimo(2)
+	assert.equals(2,mascaraOscura3.unidadesDeLucha(rolando))
+
+}
+}

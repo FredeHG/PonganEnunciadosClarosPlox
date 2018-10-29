@@ -1,0 +1,31 @@
+import artefactos.*
+import efectosGlobales.*
+import refuerzos.*
+import personaje.*
+import spells.*
+import feriaHechiceria.*
+import Comerciantes.*
+
+describe "NPC"{
+	const facil = new Nivel (1)
+	const moderado = new Nivel (2)
+	const dificil = new Nivel (4)
+	const mascaraClara = new MascaraOscura (0,2,fechaActual.fecha())
+	const navi = new NPC ([],[],"",0, facil)
+	const ashley = new NPC ([mascaraClara],[],"",0, moderado)
+fixture {
+	ashley.valorBaseLucha(5)
+}
+test "Conocer la habiilidad para la lucha de navi"{
+	assert.equals(1,navi.habilidadLucha())
+}
+
+test "Conocer la habiilidad para la lucha de Ashley Graham"{
+	assert.equals(18,ashley.habilidadLucha())
+}
+
+test "Hacer que Ashley Graham tenga dificultad difícil. Conocer la habilidad para la lucha de Ashley Graham."{
+	ashley.nivel(dificil) // ni idea
+	assert.equals(36,ashley.habilidadLucha())
+}
+}

@@ -1,0 +1,42 @@
+import personaje.*
+import spells.*
+import efectosGlobales.*
+
+describe "Hechiceria Recargada"{
+	const espectroMalefico = new Logo("espectro Malefico",1)
+	const hechizoBasico = new HechizoBasico()
+	const rolando = new Personaje (#{}, #{espectroMalefico,hechizoBasico}, espectroMalefico, 1000)
+	
+	
+test "Conocer el Nivel de Hechiceria de rolando"{
+	assert.equals(56,rolando.nivelDeHechiceria())
+}
+
+test "Cambiar el nombre del espectro maléfico y conocer el nivel de hechicería de Rolando" {
+	espectroMalefico.nombre("espectro superrecontramalefico muajajaja")
+	assert.equals(125,rolando.nivelDeHechiceria())
+}
+
+test " Cambiar el hechizo preferido de Rolando al basico y conocer el nivel de hechicería de Rolando."{
+	rolando.hechizoPreferido(hechizoBasico)
+ 	assert.equals(35,rolando.nivelDeHechiceria())
+}
+
+test "Hacer que ocurra un eclipse y conocer el nivel de hechiceria de Rolando"{
+	fuerzaOscura.eclipse()
+	assert.equals(61,rolando.nivelDeHechiceria())
+}
+
+test "Saber si el espectro Malefico es Poderoso" {
+	assert.that(espectroMalefico.esPoderoso())
+}
+
+test "Cambiar el nombre del EM a pepe y saber si es poderoso" {
+	espectroMalefico.nombre("pepe")
+	assert.notThat(espectroMalefico.esPoderoso())
+}
+
+test "Saber si hechizo basico es poderoso" {
+	assert.notThat(hechizoBasico.esPoderoso())
+}
+}

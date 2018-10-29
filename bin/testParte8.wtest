@@ -1,0 +1,60 @@
+import artefactos.*
+import efectosGlobales.*
+import refuerzos.*
+import personaje.*
+import spells.*
+import feriaHechiceria.*
+import Comerciantes.*
+
+describe "Comercio avanzado"{
+	const pastoriza = new ComercianteIndependiente (0.09)
+	const prieto = new ComercianteRegistrado ()
+	const fermepin = new ComercianteConImpuestoGanancias ()
+	const cotaDeMalla = new CotaDeMallas (0)
+	const armaduraConCotaDeMalla = new Armadura (cotaDeMalla,2,10,fechaActual.fecha())
+	const mascaraOscura = new MascaraOscura (1,3,fechaActual.fecha())
+	const ursula = new Personaje ([mascaraOscura,armaduraConCotaDeMalla],[],"",200)
+fixture {
+	minimoNoImponible.impuesto(5)
+	}
+test "Ursula comienza con 100 monedas, luego compra la mascara oscura a pastoriza" {
+	ursula.comprarArtefacto(mascaraOscura,pastoriza)
+	assert.equals(89.1,ursula.oro())
+}
+
+test "Ursula comienza con 100 monedas, luego compra la mascara oscura a prieto" {
+	ursula.comprarArtefacto(mascaraOscura,prieto)
+	assert.equals(87.9,ursula.oro())
+}
+
+test "Ursula comienza con 100 monedas, luego compra la mascara oscura a fermepin" {
+	ursula.comprarArtefacto(mascaraOscura,fermepin)
+	assert.equals(88.25,ursula.oro())
+}
+
+test "Recategorizar a pastoriza, Hacer que ursulla le compre la mascara oscura pastoriza" {
+	pastoriza.recategorizar()
+	ursula.comprarArtefacto(mascaraOscura,pastoriza)
+	assert.equals(88.2,ursula.oro())
+}
+
+test "Recategorizar dos veces a pastoriza, Hacer que ursulla le compre la mascara oscura pastoriza"{
+	pastoriza.recategorizar()
+	pastoriza.recategorizar()
+	ursula.comprarArtefacto(mascaraOscura,pastoriza)
+	assert.equals(87.9,ursula.oro())
+}
+
+
+test "Recategorizar a prieto, Hacer que ursulla le compre la mascara oscura prieto" {
+	prieto.recategorizar()
+	ursula.comprarArtefacto(mascaraOscura,prieto)
+	assert.equals(88.25,ursula.oro())
+}
+
+test "Recategorizar a fermepin, Hacer que ursulla le compre la mascara oscura fermepin" {
+	fermepin.recategorizar()
+	ursula.comprarArtefacto(mascaraOscura,fermepin)
+	assert.equals(88.25,ursula.oro())
+}
+}
